@@ -43,19 +43,19 @@ You may use any [query operator](https://dev.twitter.com/rest/public/search#quer
 
 ### Useful Examples
 
-Containing **both** ``golang`` and ``tutorial``:
+- Containing **both** ``golang`` and ``tutorial``:
 
-<code>$ gofollow -s "golang tutorial"</code>
+   <code>$ gofollow -s "golang tutorial"</code>
 
-Containing **either** ``golang`` or ``gopher`` (or both):
+- Containing **either** ``golang`` or ``gopher`` (or both):
 
-<code>$ gofollow -s "golang OR gopher"</code>
+   <code>$ gofollow -s "golang OR gopher"</code>
 
-Containing **exact phrase** ``open source``:
+- Containing **exact phrase** ``open source``:
 
-<code>$ gofollow -s "\"open source\""</code>
+   <code>$ gofollow -s "\"open source\""</code>
 
-*Character to escape double quotes may differ in your environment*
+   *Character to escape double quotes may differ in your environment*
 
 
 
