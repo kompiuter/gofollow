@@ -12,7 +12,7 @@ The executable can then be found under
 ``%GOPATH%\bin``.
 
 # About
-Running this command will go and follow users on Twitter which are related to the search term that you provide. It will prioritise following users based on user search (which tend to be more relevant) and once there are no more users are found through user search it will go ahead and find users based on their tweets.
+Running this command will go and follow users on Twitter which are related to the search term that you provide. It will prioritise following users based on user search (which tend to be more relevant) and onceno more users are found through user search it will find users based on their tweets.
 
 This is one of my first projects in Go so any feedback and/or PR's would be greatly appreciated.
 
