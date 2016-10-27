@@ -152,7 +152,7 @@ func findUsers(api *anaconda.TwitterApi) (int, error) {
 			return 0, fmt.Errorf("findUsers: %v", err)
 		}
 		for _, user := range resp {
-			if !userExists(&toFollow, &user) {
+			if !userExists(toFollow, user) {
 				if len(toFollow) >= *maxFollow { // check if we reached max number of people to follow
 					return added, nil
 				}
@@ -183,7 +183,7 @@ func findUsersByTweet(api *anaconda.TwitterApi) (int, error) {
 	added := 0
 	fn := func(resp anaconda.SearchResponse) {
 		for _, tweet := range resp.Statuses {
-			if !userExists(&toFollow, &tweet.User) {
+			if !userExists(toFollow, tweet.User) {
 				if len(toFollow) >= *maxFollow { // check if we reached max number of people to follow
 					return
 				}
@@ -220,8 +220,8 @@ func getAllFriendIDs(api *anaconda.TwitterApi) []int64 {
 }
 
 // userExists checks if "users" contain "find"
-func userExists(users *[]anaconda.User, find *anaconda.User) bool {
-	for _, user := range *users {
+func userExists(users []anaconda.User, find anaconda.User) bool {
+	for _, user := range users {
 		if user.Id == find.Id {
 			return true
 		}
