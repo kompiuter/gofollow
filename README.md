@@ -43,7 +43,7 @@ You may use any [query operator](https://dev.twitter.com/rest/public/search#quer
 
 ### Useful Examples
 
-Containing **both** 'golang' and 'gopher':
+Containing **both** 'golang' and 'tutorial':
 
 <code>$ gofollow -s "golang tutorial"</code>
 
@@ -55,7 +55,7 @@ Containing **exact phrase** 'open source':
 
 <code>$ gofollow -s "\"open source\""</code>
 
-*Please see how to escape double quotes in your environment*
+*Character to escape double quotes may differ in your environment*
 
 
 
