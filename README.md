@@ -31,12 +31,12 @@ To follow users related to Go:
 
 <code>$ gofollow -s golang</code>
 
-To follow users related to JS & Angular:
+To follow users which tweet about Go jobs:
 
-<code>$ gofollow -s "javascript, angular"</code>
+<code>$ gofollow -s "golang, job"</code>
 
 By default it will follow a maximum of 50 users. To change the maximum, use the ``-max`` flag:
 
-<code>$ gofollow -s google -max 15</code>
+<code>$ gofollow -s gopher -max 15</code>
 
 A hard maximum of 100 exists so that you don't get limited by Twitter (too many API requests/too many follow requests).
