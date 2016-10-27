@@ -9,7 +9,7 @@ Once Go is running, you can download and build the application using the followi
 <code>$ go get github.com/kompiuter/gofollow</code>
 
 The executable can then be found under
-<code>%GOPATH%\bin</code>
+``%GOPATH%\bin``.
 
 # About
 Running this command will go and follow users on Twitter which are related to the search term that you provide. It will prioritise following users based on user search (which tend to be more relevant) and once there are no more users are found through user search it will go ahead and find users based on their tweets.
@@ -23,7 +23,7 @@ Get your keys from [Twitter](https://apps.twitter.com/), then set the following 
 - TWITTER_ACCESS_TOKEN
 - TWITTER_ACCESS_TOKEN
 
-How to set environment variables in [Windows systems](http://ss64.com/nt/set.html) and [Unix systems](http://www.cyberciti.biz/faq/set-environment-variable-unix/)
+How to set environment variables in [Windows systems](http://ss64.com/nt/set.html) and in [Unix systems](http://www.cyberciti.biz/faq/set-environment-variable-unix/).
 
 
 
@@ -39,4 +39,4 @@ By default it will follow a maximum of 50 users. To change the maximum, use the 
 
 <code>$ gofollow -s google -max 15</code>
 
-A hard maximum of 100 exists so that you don't get limited by Twitter (too many API requests/too many follow requests)
+A hard maximum of 100 exists so that you don't get limited by Twitter (too many API requests/too many follow requests).
