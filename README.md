@@ -31,12 +31,32 @@ To follow users related to Go:
 
 <code>$ gofollow -s golang</code>
 
-To follow users which tweet about Go jobs:
-
-<code>$ gofollow -s "golang, job"</code>
-
 By default it will follow a maximum of 50 users. To change the maximum, use the ``-max`` flag:
 
 <code>$ gofollow -s gopher -max 15</code>
 
 A hard maximum of 100 exists so that you don't get limited by Twitter (too many API requests/too many follow requests).
+
+## Query Operators
+
+You may use any [query operator](https://dev.twitter.com/rest/public/search#query-operators) as defined by Twitter to refine your search.
+
+### Useful Examples
+
+Containing **both** 'golang' and 'gopher':
+
+<code>$ gofollow -s "golang tutorial"</code>
+
+Containing **either** 'golang' or 'gopher' (or both):
+
+<code>$ gofollow -s "golang OR gopher"</code>
+
+Containing **exact phrase** 'open source':
+
+<code>$ gofollow -s "\"open source\""</code>
+
+*Please see how to escape double quotes in your environment*
+
+
+
+
