@@ -1,5 +1,5 @@
 # gofollow
-Follow Twitter users based on a search term
+Follow Twitter users based on keywords
 
 # Installation
 This requires a working Go environment to run. Follow the steps [here](http://golang.org/doc/install) to install the Go environment.
