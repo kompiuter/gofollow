@@ -47,11 +47,11 @@ Containing **both** ``golang`` and ``tutorial``:
 
 <code>$ gofollow -s "golang tutorial"</code>
 
-Containing **either** 'golang' or 'gopher' (or both):
+Containing **either** ``golang`` or ``gopher`` (or both):
 
 <code>$ gofollow -s "golang OR gopher"</code>
 
-Containing **exact phrase** 'open source':
+Containing **exact phrase** ``open source``:
 
 <code>$ gofollow -s "\"open source\""</code>
 
