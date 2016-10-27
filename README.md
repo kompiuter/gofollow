@@ -38,3 +38,5 @@ To follow users related to JS & Angular:
 By default it will follow a maximum of 50 users. To change the maximum, use the ``-max`` flag:
 
 <code>$ gofollow -s google -max 15
+
+A hard maximum of 100 exists so that you don't get limited by Twitter (too many API requests/too many follow requests)
