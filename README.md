@@ -37,4 +37,4 @@ To follow users related to JS & Angular:
 
 By default it will follow a maximum of 50 users. To change the maximum, use the ``-max`` flag:
 
-<code>$ gofollow -s google -max 15
+<code>$ gofollow -s google -max 15 
