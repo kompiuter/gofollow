@@ -36,10 +36,6 @@ import (
 	"github.com/ChimeraCoder/anaconda"
 )
 
-// toFollow is a slice that should be populated with the users found by the search functions and
-// will subsequently be used to follow each user
-var toFollow []anaconda.User
-
 // searchTerm is the search term used by the search functions
 var searchTerm = flag.String("s", "", "(required) search term to find users by (i.e. gopher)")
 
@@ -50,6 +46,10 @@ var maxFollow = flag.Int("max", 50, "(optional) max number of users to follow (h
 // alreadyFollowing is a slice that contains all users that are already being followed.
 // This is used so that the application does not attempt to follow users that are already friends
 var alreadyFollowing []anaconda.User
+
+// toFollow is a slice that should be populated with the users found by the search functions and
+// will subsequently be used to follow each user
+var toFollow []anaconda.User
 
 func main() {
 	api, err := newTwitterAPI()
@@ -69,6 +69,8 @@ func main() {
 
 	alreadyFollowing = getAllFriends(api)
 
+	// Start finding users
+
 	fmt.Println("Finding users...")
 	done := make(chan struct{})
 	go spinner(done) // feedback for user
@@ -87,12 +89,15 @@ func main() {
 	found += n
 	fmt.Printf("\rFound %d unique users\n", found)
 	if found == 0 {
-		fmt.Println("Try a broader search term next time")
+		fmt.Println("Try a broader search term next time!")
 		os.Exit(0)
 	}
 
+	// Start following users
+
 	const userURLFormat = "https://twitter.com/%s"
 	fmt.Println("Following...")
+	newFriends := 0
 	for _, user := range toFollow {
 		err := followUser(api, user.Id)
 		if err != nil {
@@ -100,9 +105,10 @@ func main() {
 			break // could continue, but error is most likely due to limiting by twitter and will fall through
 		}
 		fmt.Printf("%-40s%-s\n", user.Name, fmt.Sprintf(userURLFormat, user.ScreenName))
+		newFriends++
 	}
 	fmt.Println("-------------------------------------------------------------------------------")
-	fmt.Println("Done!")
+	fmt.Printf("You are now following %d new users!\n", newFriends)
 }
 
 // newTwitterAPI returns a new Twitter API using keys from the environment
