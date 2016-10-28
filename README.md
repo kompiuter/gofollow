@@ -1,6 +1,8 @@
 # gofollow
 Follow Twitter users based on keywords
 
+![result](https://raw.githubusercontent.com/kompiuter/gofollow/master/result.gif)
+
 # Installation
 This requires a working Go environment to run. Follow the steps [here](http://golang.org/doc/install) to install the Go environment.
 
