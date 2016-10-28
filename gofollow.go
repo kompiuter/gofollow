@@ -22,6 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+// Package gofollow provides an automated way to follow new users
+// on Twitter which are found by searching keywords provided
+//
+// Flags
+//
+// -s    (search term)
+// -max  (max number of users to follow)
 package main
 
 import (
