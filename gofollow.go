@@ -36,9 +36,20 @@ import (
 	"github.com/ChimeraCoder/anaconda"
 )
 
+// toFollow is a slice that should be populated with the users found by the search functions and
+// will subsequently be used to follow each user
 var toFollow []anaconda.User
+
+// searchTerm is the search term used by the search functions
 var searchTerm = flag.String("s", "", "(required) search term to find users by (i.e. gopher)")
+
+// maxFollow is the maximum number of users that the application should follow. It is
+// an upper bound since there might be a case where not enough users are found to follow
 var maxFollow = flag.Int("max", 50, "(optional) max number of users to follow (hard maximum of 100 to avoid limiting by Twitter)")
+
+// alreadyFollowing is a slice that contains all users that are already being followed.
+// This is used so that the application does not attempt to follow users that are already friends
+var alreadyFollowing []anaconda.User
 
 func main() {
 	api, err := newTwitterAPI()
@@ -55,6 +66,8 @@ func main() {
 	if *maxFollow > hardMaxFollow {
 		*maxFollow = hardMaxFollow
 	}
+
+	alreadyFollowing = getAllFriends(api)
 
 	fmt.Println("Finding users...")
 	done := make(chan struct{})
@@ -160,7 +173,7 @@ func findUsers(api *anaconda.TwitterApi) (int, error) {
 			return 0, fmt.Errorf("findUsers: %v", err)
 		}
 		for _, user := range resp {
-			if !userExists(toFollow, user) {
+			if !isFollowing(user) {
 				if len(toFollow) >= *maxFollow { // check if we reached max number of people to follow
 					return added, nil
 				}
@@ -202,7 +215,7 @@ func findUsersByTweet(api *anaconda.TwitterApi) (int, error) {
 	added := 0
 	fn := func(resp anaconda.SearchResponse) {
 		for _, tweet := range resp.Statuses {
-			if !userExists(toFollow, tweet.User) {
+			if !isFollowing(tweet.User) {
 				if len(toFollow) >= *maxFollow { // check if we reached max number of people to follow
 					return
 				}
@@ -230,21 +243,26 @@ func findUsersByTweet(api *anaconda.TwitterApi) (int, error) {
 	return added, nil
 }
 
-// getAllFriendIDs returns a slice of IDs of all friends of the user
-// in the passed "TwitterApi"
-func getAllFriendIDs(api *anaconda.TwitterApi) []int64 {
-	var friendIDs []int64
-	ch := api.GetFriendsIdsAll(nil)
+// getAllFriends returns a slice of all friends of the user
+func getAllFriends(api *anaconda.TwitterApi) []anaconda.User {
+	var friends []anaconda.User
+	ch := api.GetFriendsListAll(nil)
 	for f := range ch {
-		friendIDs = append(friendIDs, f.Ids...)
+		friends = append(friends, f.Friends...)
 	}
-	return friendIDs
+	return friends
 }
 
-// userExists checks if "users" contain "find"
-func userExists(users []anaconda.User, find anaconda.User) bool {
-	for _, user := range users {
-		if user.Id == find.Id {
+// isFollowing returns true if the user passed is already a friend or is
+// already scheduled to be followed
+func isFollowing(user anaconda.User) bool {
+	for _, u := range alreadyFollowing {
+		if u.Id == user.Id {
+			return true
+		}
+	}
+	for _, u := range toFollow {
+		if u.Id == user.Id {
 			return true
 		}
 	}
