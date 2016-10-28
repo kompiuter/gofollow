@@ -138,7 +138,15 @@ func spinner(stop <-chan struct{}) {
 // (https://dev.twitter.com/rest/reference/get/users/search).
 // Returns the number of users found
 func findUsers(api *anaconda.TwitterApi) (int, error) {
-	const maxCount = 20
+	maxCount := 20
+	// don't ask for more than required
+	usersRequired := *maxFollow - len(toFollow)
+	if maxCount > usersRequired {
+		maxCount = usersRequired
+	}
+	if maxCount == 0 {
+		return 0, nil
+	}
 	page := 0
 	values := make(url.Values)
 	values.Add("count", strconv.Itoa(maxCount))
@@ -163,6 +171,9 @@ func findUsers(api *anaconda.TwitterApi) (int, error) {
 		if len(resp) != maxCount { // there are no more pages available
 			break
 		}
+		if len(toFollow) >= *maxFollow { // got number of followers required
+			break
+		}
 		page++
 	}
 
@@ -174,7 +185,15 @@ func findUsers(api *anaconda.TwitterApi) (int, error) {
 // Returns the number of users found
 func findUsersByTweet(api *anaconda.TwitterApi) (int, error) {
 	values := make(url.Values)
-	const maxCount = 100
+	maxCount := 100
+	// don't ask for more than required
+	usersRequired := *maxFollow - len(toFollow)
+	if maxCount > usersRequired {
+		maxCount = usersRequired
+	}
+	if maxCount == 0 {
+		return 0, nil
+	}
 	values.Add("result_type", "mixed")
 	values.Add("count", strconv.Itoa(maxCount))
 	values.Add("include_entities", "false")
@@ -200,6 +219,9 @@ func findUsersByTweet(api *anaconda.TwitterApi) (int, error) {
 		}
 		fn(resp)
 		if len(resp.Statuses) != maxCount { // no more pages
+			break
+		}
+		if len(toFollow) >= *maxFollow { // got number of followers required
 			break
 		}
 		resp, err = resp.GetNext(api)
