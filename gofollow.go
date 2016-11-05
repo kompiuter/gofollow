@@ -24,9 +24,9 @@ SOFTWARE.
 
 /*
 Package gofollow provides an automated way to follow new users
-on Twitter which are found by searching keywords provided
+on Twitter which are found by searching with the search term provided
 
-Flags
+Flags:
 -s    (search term)
 -max  (max number of users to follow)
 */
